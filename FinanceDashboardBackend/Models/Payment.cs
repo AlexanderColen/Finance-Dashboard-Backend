@@ -7,7 +7,6 @@ namespace FinanceDashboardBackend.Models
         public int Id { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
-        public Person Payee { get; set; }
-        public Payment Payment { get; set; }
+        public Debt Debt { get; set; }
     }
 }

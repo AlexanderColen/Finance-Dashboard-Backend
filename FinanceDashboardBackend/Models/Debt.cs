@@ -9,13 +9,6 @@ namespace FinanceDashboardBackend.Models
         public decimal Amount { get; set; }
         public string Description { get; set; }
         public DebtStatus Status { get; set; }
-        public List<Payment> Payments { get; set; }
-        public Person OwedTo { get; set; }
-        public Person OwedFrom { get; set; }
-
-        public Debt()
-        {
-            Payments = new List<Payment>();
-        }
+        public ICollection<Payment> Payments { get; set; }
     }
 }
