@@ -16,7 +16,7 @@ namespace FinanceDashboardBackend.Controllers
             _paymentService = new PaymentService(financialContext);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public bool Delete(int id)
         {
             return _paymentService.Delete(id);
@@ -28,7 +28,7 @@ namespace FinanceDashboardBackend.Controllers
             return _paymentService.GetAll();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public Payment Get(int id)
         {
             return _paymentService.GetOne(id);

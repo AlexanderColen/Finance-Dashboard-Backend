@@ -22,6 +22,11 @@ namespace FinanceDashboardBackend.Services
         /// <returns>The newly created Payment object.</returns>
         public Payment Create(Payment payment)
         {
+            if (payment == null)
+            {
+                return null;
+            }
+
             try
             {
                 _dataContext.Payments.Add(payment);
@@ -60,6 +65,11 @@ namespace FinanceDashboardBackend.Services
         /// <returns>The updated Payment object.</returns>
         public Payment Edit(Payment payment)
         {
+            if (payment == null)
+            {
+                return null;
+            }
+
             try
             {
                 var p = _dataContext.Payments.Where(p => p.Id == payment.Id).FirstOrDefault();

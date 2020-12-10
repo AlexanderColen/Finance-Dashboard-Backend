@@ -22,6 +22,11 @@ namespace FinanceDashboardBackend.Services
         /// <returns>The newly created Debt object.</returns>
         public Debt Create(Debt debt)
         {
+            if (debt == null)
+            {
+                return null;
+            }
+
             try
             {
                 _dataContext.Debts.Add(debt);
@@ -60,6 +65,11 @@ namespace FinanceDashboardBackend.Services
         /// <returns>The updated Debt object.</returns>
         public Debt Edit(Debt debt)
         {
+            if (debt == null)
+            {
+                return null;
+            }
+
             try
             {
                 var d = _dataContext.Debts.Where(d => d.Id == debt.Id).FirstOrDefault();
