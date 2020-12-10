@@ -1,11 +1,20 @@
 ﻿using FinanceDashboardBackend.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FinanceDashboardBackend.Services
 {
     public class PaymentService : IService<Payment>
     {
+        private readonly FinancialContext _dataContext;
+
+        public PaymentService(FinancialContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
+
         /// <summary>
         /// Create a new Payment.
         /// </summary>
@@ -13,7 +22,16 @@ namespace FinanceDashboardBackend.Services
         /// <returns>The newly created Payment object.</returns>
         public Payment Create(Payment payment)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dataContext.Payments.Add(payment);
+                _dataContext.SaveChangesAsync();
+            } catch (DbUpdateException)
+            {
+                return null;
+            }
+            
+            return payment;
         }
 
         /// <summary>
@@ -23,7 +41,16 @@ namespace FinanceDashboardBackend.Services
         /// <returns>A boolean indicating whether the deletion was succesful.</returns>
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var payment = _dataContext.Payments.Where(p => p.Id == id).FirstOrDefault();
+                _dataContext.Payments.Remove(payment);
+                _dataContext.SaveChangesAsync();
+                return true;
+            } catch (DbUpdateException)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -33,7 +60,18 @@ namespace FinanceDashboardBackend.Services
         /// <returns>The updated Payment object.</returns>
         public Payment Edit(Payment payment)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var p = _dataContext.Payments.Where(p => p.Id == payment.Id).FirstOrDefault();
+                p.Amount = payment.Amount;
+                p.Date = payment.Date;
+                p.Debt = payment.Debt;
+                _dataContext.SaveChangesAsync();
+                return p;
+            } catch (DbUpdateException)
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -42,7 +80,7 @@ namespace FinanceDashboardBackend.Services
         /// <returns>A list of Payment objects.</returns>
         public List<Payment> GetAll()
         {
-            throw new NotImplementedException();
+            return _dataContext.Payments.ToList();
         }
 
         /// <summary>
@@ -52,7 +90,7 @@ namespace FinanceDashboardBackend.Services
         /// <returns>A Payment object.</returns>
         public Payment GetOne(int id)
         {
-            throw new NotImplementedException();
+            return _dataContext.Payments.Where(p => p.Id == id).FirstOrDefault();
         }
     }
 }

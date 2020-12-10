@@ -11,9 +11,9 @@ namespace FinanceDashboardBackend.Controllers
     {
         private readonly PaymentService _paymentService;
 
-        public PaymentController()
+        public PaymentController(FinancialContext financialContext)
         {
-            _paymentService = new PaymentService();
+            _paymentService = new PaymentService(financialContext);
         }
 
         [HttpDelete]

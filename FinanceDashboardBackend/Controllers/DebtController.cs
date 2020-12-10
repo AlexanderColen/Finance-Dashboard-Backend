@@ -11,9 +11,9 @@ namespace FinanceDashboardBackend.Controllers
     {
         private readonly DebtService _debtService;
 
-        public DebtController()
+        public DebtController(FinancialContext financialContext)
         {
-            _debtService = new DebtService();
+            _debtService = new DebtService(financialContext);
         }
 
         [HttpDelete]
